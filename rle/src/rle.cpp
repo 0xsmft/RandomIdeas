@@ -23,8 +23,10 @@ static void Compress( const std::filesystem::path& rPath )
 	char lastChar = -1;
 	uint64_t n = 1u;
 
-	while( ( lastChar = stream.get() ) && currentChar != -1 )
+	while( true )
 	{
+		lastChar = stream.get();
+
 		if( currentChar == lastChar )
 		{
 			++n;
@@ -47,6 +49,9 @@ static void Compress( const std::filesystem::path& rPath )
 
 			currentChar = lastChar;
 		}
+
+		if( stream.eof() )
+			break;
 	}
 
 	stream.close();
