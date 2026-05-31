@@ -48,6 +48,55 @@ function AddProject( Name )
 			symbols "off"
 			optimize "on"
 end
+
+function RaylibProject( Name )
+    project (Name)
+        kind "ConsoleApp"
+        language "C++"
+        cppdialect "C++23"
+        location (Name)
+
+        targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+        objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+        includedirs 
+        {
+            "%{prj.name}/src",
+            "vendor/raylib/include"
+        }
+
+        files 
+        {
+            "%{prj.name}/src/**.h",
+            "%{prj.name}/src/**.cpp"
+        }
+
+        filter "system:windows"
+            systemversion "latest"
+        
+            links 
+            {
+                "vendor/raylib/lib/raylib.lib",
+                "winmm.lib"   
+            }
+
+		filter "configurations:Debug"
+            defines { "XY_DEBUG" }
+			runtime "Debug"
+			symbols "on"
+
+		filter "configurations:Release"
+            defines { "XY_RELEASE" }
+			runtime "Release"
+			optimize "on"
+			symbols "on"
+
+		filter "configurations:Dist"
+            defines { "XY_DIST" }
+			runtime "Release"
+			symbols "off"
+			optimize "on"
+end
    
 function KernelProject( Name )
     project (Name)
@@ -122,4 +171,5 @@ AddProject( "hexdump" )
 AddProject( "fsvis" )
 AddProject( "ceaserscipher" )
 AddProject( "onetimepad" )
+RaylibProject( "raylibfirst" )
 KernelProject("krnldrv")
