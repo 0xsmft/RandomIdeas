@@ -94,14 +94,14 @@ int main( int count, char** ppArgs )
 		return EXIT_FAILURE;
 	}
 
+	if( !std::filesystem::exists( ppArgs[ 1 ] ) )
+	{
+		std::cout << "File to compress/decompress as '" << ppArgs[ 1 ] << "' does not exist!\n";
+		return EXIT_FAILURE;
+	}
+
 	if( !std::strcmp( ppArgs[ 2 ], "compress" ) )
 	{
-		if( !std::filesystem::exists( ppArgs[ 1 ] ) )
-		{
-			std::cout << "File to compress: " << ppArgs[ 1 ] << " does not exist!\n";
-			return EXIT_FAILURE;
-		}
-
 		Compress( std::filesystem::path( ppArgs[ 1 ] ) );
 	}
 	else if( !std::strcmp( ppArgs[ 2 ], "decompress" ) )

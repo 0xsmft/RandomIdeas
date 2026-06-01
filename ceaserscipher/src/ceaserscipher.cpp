@@ -40,7 +40,7 @@ static void Encode( const std::filesystem::path& rPath )
 static void Decode( const std::filesystem::path& rPath )
 {
 	// TODO: Not sure if binary here is needed, but my fear is that one time when we encode it may be counted
-	// as a binary vale...
+	// as a binary value...
 	std::ifstream stream( rPath, std::ios::in | std::ios::binary );
 
 	auto outPath = rPath;
@@ -71,24 +71,18 @@ int main( int count, char** ppArgs )
 		return EXIT_FAILURE;
 	}
 
+	if( !std::filesystem::exists( ppArgs[ 1 ] ) )
+	{
+		std::cout << "File to encode/decode as '" << ppArgs[ 1 ] << "' does not exist!\n";
+		return EXIT_FAILURE;
+	}
+
 	if( !std::strcmp( ppArgs[ 2 ], "encode" ) )
 	{
-		if( !std::filesystem::exists( ppArgs[ 1 ] ) )
-		{
-			std::cout << "File to encode: " << ppArgs[ 1 ] << " does not exist!\n";
-			return EXIT_FAILURE;
-		}
-
 		Encode( std::filesystem::path( ppArgs[ 1 ] ) );
 	}
 	else if( !std::strcmp( ppArgs[ 2 ], "decode" ) )
 	{
-		if( !std::filesystem::exists( ppArgs[ 1 ] ) )
-		{
-			std::cout << "File to decode: " << ppArgs[ 1 ] << " does not exist!\n";
-			return EXIT_FAILURE;
-		}
-
 		Decode( std::filesystem::path( ppArgs[ 1 ] ) );
 	}
 	else
