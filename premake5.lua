@@ -158,6 +158,47 @@ function KernelProject( Name )
         }
 end
 
+function AddCProject( Name )
+    project (Name)
+        kind "ConsoleApp"
+        language "c"
+        location (Name)
+
+        targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+        objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+        includedirs 
+        {
+            "%{prj.name}/src"
+        }
+
+        files 
+        {
+            "%{prj.name}/src/**.h",
+            "%{prj.name}/src/**.c"
+        }
+
+        filter "system:windows"
+            systemversion "latest"
+        
+		filter "configurations:Debug"
+            defines { "XY_DEBUG" }
+			runtime "Debug"
+			symbols "on"
+
+		filter "configurations:Release"
+            defines { "XY_RELEASE" }
+			runtime "Release"
+			optimize "on"
+			symbols "on"
+
+		filter "configurations:Dist"
+            defines { "XY_DIST" }
+			runtime "Release"
+			symbols "off"
+			optimize "on"
+end
+
 group "Apps"
 AddProject( "passgen" )
 AddProject( "audioplayer" )
@@ -173,4 +214,5 @@ AddProject( "ceaserscipher" )
 AddProject( "onetimepad" )
 RaylibProject( "raylibfirst" )
 RaylibProject( "raylib3d" )
+AddCProject("HelloWorldInC")
 KernelProject("krnldrv")
