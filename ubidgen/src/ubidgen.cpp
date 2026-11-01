@@ -4,7 +4,7 @@
  *  ubidgen
  *
  * Description:
- *  Unqiue Build ID generator (for Saturn, 0xsmft, mftcode, picokrnl, etc)
+ *  Unique Build ID generator (for Saturn, 0xsmft, mftcode, picokrnl, etc)
 */
 
 #include <iostream>
